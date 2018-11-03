@@ -3,7 +3,7 @@
 Simple Web page project.
 [Vue.js](https://vuejs.org/) and [Vuetify.js](https://vuetifyjs.com/en/) were used in order to develop the app.
 
-[Link to App](https://test-tex.herokuapp.com/contact)
+[Link to App](https://test-tex.herokuapp.com)
 ## Project setup
 ```
 npm install
