@@ -62,7 +62,7 @@
       messageModel: '',
       messageRules: [
         v => !!v || 'Message is required',
-        v => (v && v.length <= 250) || 'Name must be less than 250 characters'
+        v => (v && v.length <= 250) || 'Message must be less than 250 characters'
       ],
     }),
     computed: {
