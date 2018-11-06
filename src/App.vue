@@ -29,9 +29,13 @@
     </v-toolbar>
 
     <v-content>
-      <CarouselImg :window-width=window.width />
-      
+        <carousel :perPage=countOfImg>
+          <slide v-for="(item,i) in items" :key="i">
+            <v-img :src="item.src" alt="" @click=onClick(item.name)></v-img>
+          </slide>
+        </carousel>
       <v-container fluid>
+        <h4>Image name: {{imgSelected}}</h4>
         <router-view></router-view>
         <EmptyContent v-for="index in 10" :key="index"/>
       </v-container>
@@ -41,23 +45,22 @@
 
 <script>
 import EmptyContent from './components/EmptyContent'
-import CarouselImg from './components/CarouselImg'
+import { Carousel, Slide } from 'vue-carousel'
 
-const COUNT_OF_IMG_FOR_MOBILE = 3
-const MAX_IMG_WIDTH = 1000
-const MAX_CAROUSEL_HEIGHT = 600
+const COUNT_OF_IMG_FOR_MOBILE = 1
+const COUNT_OF_IMG_FOR_PC = 3
 const MOBILE_WIDTH = 700
-const ALERT_MSG_TEXT = 'position of Image:'
 
 export default {
   name: 'App',
   components: {
     EmptyContent,
-    CarouselImg
+    Carousel, Slide
   },
   data () {
     return {
-      carouselHeight: 500,
+      countOfImg: 0,
+      imgSelected: '',
       countOfImagesForMobileDev: COUNT_OF_IMG_FOR_MOBILE,
       window: {
         width: 0
@@ -65,21 +68,27 @@ export default {
       
       items: [
         {
+          name: 'siema--pink 1',
           src: 'https://pawelgrzybek.com/siema/assets/siema--pink.svg'
         },
         {
+          name: 'siema--yellow 2',
           src: 'https://pawelgrzybek.com/siema/assets/siema--yellow.svg'
         },
         {
+          name: 'siema--pink 3',
           src: 'https://pawelgrzybek.com/siema/assets/siema--pink.svg'
         },
         {
+          name: 'siema--yellow 4',
           src: 'https://pawelgrzybek.com/siema/assets/siema--yellow.svg'
         },
         {
+          name: 'siema--pink 5',
           src: 'https://pawelgrzybek.com/siema/assets/siema--pink.svg'
         },
         {
+          name: 'siema--yellow 6',
           src: 'https://pawelgrzybek.com/siema/assets/siema--yellow.svg'
         }
       ]
@@ -87,8 +96,6 @@ export default {
   },
   
   created() {
-    //this.getCarouselHeight()
-    
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
     console.log(`width: ${this.window.width}`)
@@ -99,37 +106,18 @@ export default {
   methods: {
     handleResize() {
       this.window.width = window.innerWidth
-      //this.setCarouselHeight(this.window.width)
+      this.setImgCount()
     },
-    onItemClick(index){
-      alert(`${ALERT_MSG_TEXT} ${index + 1}`)
-    },
-    onImgClick(col, index){
-      alert(`${ALERT_MSG_TEXT} ${(col - 1) * COUNT_OF_IMG_FOR_MOBILE + index + 1}`)
-    },
-    getImgMaxCountInCarousel(){
-      var countOfImg = this.items.length / COUNT_OF_IMG_FOR_MOBILE
-      return countOfImg
-    },
-    getSliceOfImgs(index) {
-      var sliceOfImgs = this.items.slice(index, index + this.countOfImagesForMobileDev)
-      
-      console.log(sliceOfImgs)
-      
-      return sliceOfImgs;
-    },
-    setCarouselHeight (widthOfWindow) {
-      if(widthOfWindow >= MAX_IMG_WIDTH){
-        this.carouselHeight = MAX_CAROUSEL_HEIGHT * (widthOfWindow / MAX_IMG_WIDTH) / COUNT_OF_IMG_FOR_MOBILE
+    setImgCount(){
+      if(this.window.width < MOBILE_WIDTH){
+        this.countOfImg = COUNT_OF_IMG_FOR_MOBILE
       }
       else{
-        if(widthOfWindow < MAX_IMG_WIDTH){
-          this.carouselHeight = MAX_CAROUSEL_HEIGHT / ((MAX_IMG_WIDTH / widthOfWindow) * COUNT_OF_IMG_FOR_MOBILE)
-        }
-        if(widthOfWindow < MOBILE_WIDTH){
-          this.carouselHeight = MAX_CAROUSEL_HEIGHT / (MAX_IMG_WIDTH / widthOfWindow)
-        }
+        this.countOfImg = COUNT_OF_IMG_FOR_PC
       }
+    },
+    onClick(imgName){
+      this.imgSelected = imgName
     }
   }
 }
