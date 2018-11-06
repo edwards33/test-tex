@@ -28,6 +28,7 @@
               :rules="messageRules"
               label="Message"
               v-model="messageModel"
+              :counter=250
             ></v-textarea>
             <v-btn
               :disabled="!valid"
