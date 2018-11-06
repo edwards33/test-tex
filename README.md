@@ -1,7 +1,7 @@
 # test-tex
 
 Simple Web page project.
-[Vue.js](https://vuejs.org/) and [Vuetify.js](https://vuetifyjs.com/en/) were used in order to develop the app.
+[Vue.js](https://vuejs.org/) and [Vuetify.js](https://vuetifyjs.com/en/) were used in order to develop the app ([Cypress](https://www.cypress.io/) is used as JavaScript End to End Testing Framework).
 
 [Link to App](https://test-tex.herokuapp.com)
 ## Project setup
